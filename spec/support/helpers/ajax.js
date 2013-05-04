@@ -51,7 +51,7 @@ define(['jquery'], function() {
       this.responseText = response.responseText || "";
       this.readyState = 4;
       this.responseHeaders = response.responseHeaders ||
-      {"Content-type": response.contentType || "application/json" };
+      {"Content-type": response.contentType || "text/html" };
 
       this.onload();
       this.onreadystatechange();
