@@ -1,11 +1,19 @@
-define(['jquery'], function() {
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(window.jQuery);
+  }
+})(function($) {
 
   /**
-   * Slightly modified pivotal's helper (http://github.com/pivotal/jasmine-ajax)
+   * Slightly modified Pivotal labs' helper (http://github.com/pivotal/jasmine-ajax)
    * to allow more flexible mocking and expectations checking
    */
 
-  var extend = Object.extend || jQuery.extend;
+  var extend = Object.extend || $.extend;
 
   function MockXMLHttpRequest() {
     extend(this, {
@@ -59,7 +67,7 @@ define(['jquery'], function() {
 
     responseTimeout: function() {
       this.readyState = 4;
-      jasmine.Clock.tick(jQuery.ajaxSettings.timeout || 30000);
+      jasmine.Clock.tick($.ajaxSettings.timeout || 30000);
       this.onreadystatechange('timeout');
     },
 
@@ -115,7 +123,7 @@ define(['jquery'], function() {
     },
 
     installMock: function() {
-      if (typeof jQuery != 'undefined') {
+      if (typeof $ != 'undefined') {
         Ajax.installJquery();
       } else {
         throw new Error("jasmine.Ajax currently only supports jQuery");
@@ -125,15 +133,15 @@ define(['jquery'], function() {
 
     installJquery: function() {
       Ajax.mode = 'jQuery';
-      Ajax.real = jQuery.ajaxSettings.xhr;
-      jQuery.ajaxSettings.xhr = Ajax.jQueryMock;
+      Ajax.real = $.ajaxSettings.xhr;
+      $.ajaxSettings.xhr = Ajax.jQueryMock;
 
     },
 
     uninstallMock: function() {
       Ajax.assertInstalled();
       if (Ajax.mode == 'jQuery') {
-        jQuery.ajaxSettings.xhr = Ajax.real;
+        $.ajaxSettings.xhr = Ajax.real;
       }
       Ajax.reset();
     },
@@ -157,4 +165,4 @@ define(['jquery'], function() {
     installed: false,
     mode: null
   };
-});
+})();

@@ -1,4 +1,12 @@
-define(['jquery', 'underscore'], function(jQuery, _) {
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(window.jQuery);
+  }
+})(function($) {
 
   var cache = {};
 
@@ -38,7 +46,7 @@ define(['jquery', 'underscore'], function(jQuery, _) {
       cache[file] = load(file);
     }
 
-    return _.clone(cache[file]);
+    return typeof cache[file] === 'object' ? $.extend(true, {}, cache[file]) : cache[file];
   };
 
   jasmine.fixture.path = '/base/spec/support/fixtures/';

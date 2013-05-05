@@ -1,4 +1,12 @@
-define(["jquery"], function(jQuery) {
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('jquery'));
+  } else {
+    factory(window.jQuery);
+  }
+})(function($) {
 
   /**
    * Matchers for jQuery elements. All supports actual element to be a jQuery object
@@ -118,7 +126,7 @@ define(["jquery"], function(jQuery) {
      * @return {Boolean}
      */
     toExist: function(length) {
-      var found = jQuery(this.actual);
+      var found = $(this.actual);
       return length ? found.length == length : !!found.length;
     },
 
@@ -256,16 +264,16 @@ define(["jquery"], function(jQuery) {
   };
 
   var browserTagCaseIndependentHtml = function(html) {
-    return jQuery("<div/>").append(html).html();
+    return $("<div/>").append(html).html();
   };
 
   var elementToString = function(element) {
-    return jQuery("<div/>").append(element.clone()).html() || element.selector;
+    return $("<div/>").append(element.clone()).html() || element.selector;
   };
 
   var wrapMatcher = function(matcher) {
     return function() {
-      this.actual = jQuery(this.actual);
+      this.actual = $(this.actual);
       var result = matcher.apply(this, arguments);
       this.actual = elementToString(this.actual);
       return result;

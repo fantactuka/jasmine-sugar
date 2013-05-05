@@ -1,4 +1,5 @@
-define([], function() {
+(function() {
+
   /**
    * Overriding Jasmine's describe to allow 3 arguments, where second is optional RequireJS dependencies list
    * @type {Function}
@@ -18,4 +19,4 @@ define([], function() {
       original(description, dependencies)
     }
   };
-});
+})();
