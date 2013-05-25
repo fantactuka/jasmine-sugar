@@ -121,7 +121,7 @@ describe('MockXHR with jquery', function() {
       Ajax.listen(/^\/users\/(\d{1})$/, function(match) {
         return { name: 'Tom', id: match[1] };
       }, function() {
-        return { status: 304 }
+        return { status: 304 };
       });
       $.ajax('/users/1');
 
