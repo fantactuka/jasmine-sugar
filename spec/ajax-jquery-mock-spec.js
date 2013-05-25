@@ -117,16 +117,29 @@ describe('MockXHR with jquery', function() {
       expect(respond).toHaveBeenCalledWith({ name: 'Tom' });
     });
 
-    it('responds to matched reg exp and pass matching into response fn', function() {
+    it('responds to matched reg exp and passes matching into response fn', function() {
       Ajax.listen(/^\/users\/(\d{1})$/, function(match) {
         return { name: 'Tom', id: match[1] };
+      }, function() {
+        return { status: 304 }
       });
       $.ajax('/users/1');
 
-      expect(respond).toHaveBeenCalledWith({ name: 'Tom', id: '1' });
+      expect(respond).toHaveBeenCalledWith({ name: 'Tom', id: '1' }, { status: 304 });
     });
 
-    it('uses later listener with higher priority', function() {
+    it('responds to matched url and passes it to response fn', function() {
+      Ajax.listen('/users/1', function(match) {
+        return { name: 'Tom', url: match[0] };
+      }, function() {
+        return { status: 304 };
+      });
+      $.ajax('/users/1');
+
+      expect(respond).toHaveBeenCalledWith({ name: 'Tom', url: '/users/1' }, { status: 304 });
+    });
+
+    it('uses latest listener with higher priority', function() {
       Ajax.listen('/users/1', { name: 'Tom' });
       Ajax.listen('/users/1', { name: 'Sam' });
       $.ajax('/users/1');
