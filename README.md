@@ -2,7 +2,7 @@ jasmine-sugar [![Build Status](https://travis-ci.org/fantactuka/jasmine-sugar.pn
 =============
 
 ## Installation
-Just grab needed helpers from lib dir
+Using [Bower](http://twitter.github.com/bower/) `bower install jasmine-sugar` or just copy needed helpers from lib directory
 
 ### Ajax
 This helper allows you to mock and control ajax requests flow. It's extended Pivotal's helper with a little more flexible API
