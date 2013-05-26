@@ -34,7 +34,7 @@ describe('Twitter widget', function() {
 
 As you might noticed above you can use `Ajax.respond` (as well as `Ajax.timeout` and `Ajax.abort`) for the most
 recent ajax request. It's the same as you do `Ajax.mostRecentCall.respond(json)`. As usually you can use specific
-call in a stack via `Ajax.calls[3].respond(json)`
+call in a stack via `Ajax.calls[3].respond(json)`. There's also alias `response` to `respond`.
 
 #### Listening for future requests
 Sometimes you might want to setup requests responses before running it. It's useful when u testing
@@ -73,7 +73,7 @@ with more specific for nested specs.
 
 ### Fixture
 Simple helper to load either html or json with cache support
-```
+```js
 var json;
 
 beforeEach(function() {
@@ -85,7 +85,7 @@ beforeEach(function() {
 
 ### Sandbox
 Reference to html element that is cleared before each spec so you can use it to render needed html
-```
+```js
 beforeEach(function() {
   var view = new View();
   view.render();
