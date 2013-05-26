@@ -36,7 +36,7 @@ As you might noticed above you can use `Ajax.respond` (as well as `Ajax.timeout`
 recent ajax request. It's the same as you do `Ajax.mostRecentCall.respond(json)`. As usually you can use specific
 call in a stack via `Ajax.calls[3].respond(json)`
 
-####Listening for future requests
+#### Listening for future requests
 Sometimes you might want to setup requests responses before running it. It's useful when u testing
 one piece of functionality that should always resolve same request. It allows you to setup response
 only once and later just write code in a synchronous manner
@@ -70,3 +70,28 @@ describe('Twitter widget', function() {
 ```
 **Note** that newly added listeners have higher priority, so you can always override top level listeners
 with more specific for nested specs.
+
+### Fixture
+Simple helper to load either html or json with cache support
+```
+var json;
+
+beforeEach(function() {
+  json = jasmine.fixture('user.json');
+  // Requests to '${jasmine.fixture.path}/user.json'
+  // By default jasmine.fixture.path = '/base/spec/support/fixtures/' to work well with Karma (former testacular runner)
+});
+```
+
+### Sandbox
+Reference to html element that is cleared before each spec so you can use it to render needed html
+```
+beforeEach(function() {
+  var view = new View();
+  view.render();
+  view.$el.appendTo(jasmine.sandbox);
+});
+```
+
+### Dom
+A bunch of dom matchers that useful to check element attributes and properties in a various ways. It's tightly coupled with jQuery
