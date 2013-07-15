@@ -118,7 +118,7 @@ describe('MockXHR with jquery', function() {
     });
 
     it('responds to matched reg exp and passes matching into response fn', function() {
-      Ajax.listen(/^\/users\/(\d{1})$/, function(match) {
+      Ajax.listen(/^\/users\/(\d{1})$/, function(xhr, match) {
         return { name: 'Tom', id: match[1] };
       }, function() {
         return { status: 304 };
@@ -129,7 +129,7 @@ describe('MockXHR with jquery', function() {
     });
 
     it('responds to matched url and passes it to response fn', function() {
-      Ajax.listen('/users/1', function(match) {
+      Ajax.listen('/users/1', function(xhr, match) {
         return { name: 'Tom', url: match[0] };
       }, function() {
         return { status: 304 };
