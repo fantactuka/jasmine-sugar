@@ -66,15 +66,23 @@ describe('MockXHR', function() {
   describe('data', function() {
     beforeEach(function() {
       xhr.open('POST', 'http://example.com?this=that');
-      xhr.send('3+stooges=shemp&3+stooges=larry%20%26%20moe%20%26%20curly&some%3Dthing=else+entirely');
     });
 
-    it('should return request params as a hash of arrays with values sorted alphabetically', function() {
+    it('returns request params as a hash of arrays with values sorted alphabetically', function() {
+      xhr.send('3+stooges=shemp&3+stooges=larry%20%26%20moe%20%26%20curly&some%3Dthing=else+entirely');
+
       var data = xhr.data();
       expect(data['3 stooges'].length).toEqual(2);
       expect(data['3 stooges'][0]).toEqual('larry & moe & curly');
       expect(data['3 stooges'][1]).toEqual('shemp');
       expect(data['some=thing']).toEqual(['else entirely']);
+    });
+
+    it('returns parsed json', function() {
+      var object = { a: 1, b: [1, 2] };
+      xhr.send(JSON.stringify(object));
+
+      expect(xhr.data()).toEqual(object);
     });
   });
 });
